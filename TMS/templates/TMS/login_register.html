@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- StyleSheet -->
+  <link rel="stylesheet" href="{% static 'TMS/login_register_styles.css' %}" />
+  <title>Sign Up | Login Form</title>
+</head>
+
+<body>
+  <section>
+    <div class="container">
+      <!-- Login -->
+      <div class="user login">
+        <div class="img-box">
+          <img src="{% static 'TMS/l1.jpg' %}" alt="" />
+        </div>
+        <div class="form-box">
+          <div class="top">
+            <p>
+              Not a member?
+              <span data-id="#ff0066">Register now</span>
+            </p>
+          </div>
+          <form action="{% url 'TMS:login' %}" method="post">
+            <div class="form-control">
+              {% csrf_token %}
+              <h2>Hello Again!</h2>
+              <p>Welcome back you've been missed.</p>
+              <input name="username" type="text" placeholder="Enter Username" />
+              <div>
+                <!-- {% csrf_token %} -->
+                <input name="password" type="password" placeholder="Password" />
+                <div class="icon form-icon">
+                  <!-- <img src="{% static 'TMS/eye.svg" alt="" /> -->
+                </div>
+              </div>
+              <!-- <span>Recovery Password</span> -->
+              <input type="Submit" value="Login" />
+            </div>
+            <div class="form-control">
+              <p>Or continue with</p>
+              <div class="icons">
+                <div class="icon">
+                  <img src="{% static 'TMS/search.svg' %}" alt="" />
+                </div>
+                <div class="icon">
+                  <img src="{% static 'TMS/apple.svg' %}" alt="" />
+                </div>
+                <div class="icon">
+                  <img src="{% static 'TMS/facebook.svg' %}" alt="" />
+                </div>
+                <div class="icon">
+                  <img src="{% static 'TMS/github.svg' %}" alt="" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Register -->
+      <div class="user signup">
+        <div class="form-box">
+          <div class="top">
+            <p>
+              Already a member?
+              <span data-id="#1a1aff">Login now</span>
+            </p>
+          </div>
+          <form action="{% url 'TMS:register' %}" method="post">
+            <div class="form-control">
+              {% csrf_token %}
+              <h2>Welcome Fast Timetable Management System</h2>
+              <p>It's good to have you.</p>
+              <input name="username" type="text" placeholder="Enter Username" />
+              <input name="email" type="email" placeholder="Enter Email" />
+              <div>
+                <input name="password" type="password" placeholder="Password" />
+                <div class="icon form-icon">
+                  <img src="{% static 'TMS/eye.svg' %}" alt="" />
+                </div>
+              </div>
+              <div>
+                <input name="confirmation" type="password" placeholder="Confirm Password" />
+                <div class="icon form-icon">
+                  <img src="{% static 'TMS/l2.jpg' %}" alt="" />
+                </div>
+              </div>
+              <div>
+                <label for="user-type">Login As:</label>
+                <div class="field">
+                  <select id="user-type" name="user">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                  </select>
+                </div>
+              </div>
+              <input type="Submit" value="Register" />
+            </div>
+            <div class="form-control" style="margin-bottom: 35px;">
+              <!-- <p>Or continue with</p>
+              <div class="icons">
+                <div class="icon">
+                  <img src="{% static 'TMS/search.svg' %}" alt="" />
+                </div>
+                <div class="icon">
+                  <img src="{% static 'TMS/apple.svg' %}" alt="" />
+                </div>
+                <div class="icon">
+                  <img src="{% static 'TMS/facebook.svg' %}" alt="" />
+                </div>
+                <div class="icon">
+                  <img src="{% static 'TMS/github.svg' %}" alt="" />
+                </div>
+              </div> -->
+            </div>
+          </form>
+        </div>
+        <div class="img-box">
+          <img src="{% static 'TMS/l3.jpg' %}" alt="" />
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- IndexJs -->
+  <script src="{% static 'TMS/login_register.js' %}"></script>
+</body>
+
+</html>

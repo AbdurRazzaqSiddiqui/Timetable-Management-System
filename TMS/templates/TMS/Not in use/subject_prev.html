@@ -1,0 +1,224 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department Subject Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      background-image: url("{% static 'TMS/background.jpg' %}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    form {
+      align-self: center;
+      max-width: 1100px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"] {
+      width: calc(40% - 6px);
+      /* Adjust width as needed */
+      padding: 8px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 15px;
+      height: 25px;
+      width: 200px;
+    }
+
+    input[type="submit"] {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h2>Department Subject Form</h2>
+
+  <form action="{% url 'TMS:semester_info_form' %}" method="post">
+    {% csrf_token %}
+    <h2>Computer Science</h2>
+    <h3>Semester 1</h3>
+    <label for="subject1">Subject 1 Name:</label>
+    <input type="text" id="subject1" name="subject1" required>
+    <label for="subject1Code">Subject 1 Code:</label>
+    <input type="text" id="subject1Code" name="subject1Code" required>
+    <label for="subject1Teacher">Subject 1 Teacher:</label>
+    <input type="text" id="subject1Teacher" name="subject1Teacher" required><br>
+
+    <label for="subject2">Subject 2 Name:</label>
+    <input type="text" id="subject2" name="subject2" required>
+    <label for="subject2Code">Subject 2 Code:</label>
+    <input type="text" id="subject2Code" name="subject2Code" required>
+    <label for="subject2Teacher">Subject 2 Teacher:</label>
+    <input type="text" id="subject2Teacher" name="subject2Teacher" required><br>
+
+    <label for="subject3">Subject 3 Name:</label>
+    <input type="text" id="subject3" name="subject3" required>
+    <label for="subject3Code">Subject 3 Code:</label>
+    <input type="text" id="subject3Code" name="subject3Code" required>
+    <label for="subject3Teacher">Subject 3 Teacher:</label>
+    <input type="text" id="subject3Teacher" name="subject3Teacher" required><br>
+
+    <label for="subject4">Subject 4 Name:</label>
+    <input type="text" id="subject4" name="subject4" required>
+    <label for="subject4Code">Subject 4 Code:</label>
+    <input type="text" id="subject4Code" name="subject4Code" required>
+    <label for="subject4Teacher">Subject 4 Teacher:</label>
+    <input type="text" id="subject4Teacher" name="subject4Teacher" required><br>
+
+    <label for="subject5">Subject 5 Name:</label>
+    <input type="text" id="subject5" name="subject5" required>
+    <label for="subject5Code">Subject 5 Code:</label>
+    <input type="text" id="subject5Code" name="subject5Code" required>
+    <label for="subject5Teacher">Subject 5 Teacher:</label>
+    <input type="text" id="subject5Teacher" name="subject5Teacher" required><br>
+
+    <h3>Semester 3</h3>
+    <label for="subject1">Subject 1 Name:</label>
+    <input type="text" id="subject1" name="subject1" required>
+    <label for="subject1Code">Subject 1 Code:</label>
+    <input type="text" id="subject1Code" name="subject1Code" required>
+    <label for="subject1Teacher">Subject 1 Teacher:</label>
+    <input type="text" id="subject1Teacher" name="subject1Teacher" required><br>
+
+    <label for="subject2">Subject 2 Name:</label>
+    <input type="text" id="subject2" name="subject2" required>
+    <label for="subject2Code">Subject 2 Code:</label>
+    <input type="text" id="subject2Code" name="subject2Code" required>
+    <label for="subject2Teacher">Subject 2 Teacher:</label>
+    <input type="text" id="subject2Teacher" name="subject2Teacher" required><br>
+
+    <label for="subject3">Subject 3 Name:</label>
+    <input type="text" id="subject3" name="subject3" required>
+    <label for="subject3Code">Subject 3 Code:</label>
+    <input type="text" id="subject3Code" name="subject3Code" required>
+    <label for="subject3Teacher">Subject 3 Teacher:</label>
+    <input type="text" id="subject3Teacher" name="subject3Teacher" required><br>
+
+    <label for="subject4">Subject 4 Name:</label>
+    <input type="text" id="subject4" name="subject4" required>
+    <label for="subject4Code">Subject 4 Code:</label>
+    <input type="text" id="subject4Code" name="subject4Code" required>
+    <label for="subject4Teacher">Subject 4 Teacher:</label>
+    <input type="text" id="subject4Teacher" name="subject4Teacher" required><br>
+
+    <label for="subject5">Subject 5 Name:</label>
+    <input type="text" id="subject5" name="subject5" required>
+    <label for="subject5Code">Subject 5 Code:</label>
+    <input type="text" id="subject5Code" name="subject5Code" required>
+    <label for="subject5Teacher">Subject 5 Teacher:</label>
+    <input type="text" id="subject5Teacher" name="subject5Teacher" required><br>
+
+    <h3>Semester 5</h3>
+    <label for="subject1">Subject 1 Name:</label>
+    <input type="text" id="subject1" name="subject1" required>
+    <label for="subject1Code">Subject 1 Code:</label>
+    <input type="text" id="subject1Code" name="subject1Code" required>
+    <label for="subject1Teacher">Subject 1 Teacher:</label>
+    <input type="text" id="subject1Teacher" name="subject1Teacher" required><br>
+
+    <label for="subject2">Subject 2 Name:</label>
+    <input type="text" id="subject2" name="subject2" required>
+    <label for="subject2Code">Subject 2 Code:</label>
+    <input type="text" id="subject2Code" name="subject2Code" required>
+    <label for="subject2Teacher">Subject 2 Teacher:</label>
+    <input type="text" id="subject2Teacher" name="subject2Teacher" required><br>
+
+    <label for="subject3">Subject 3 Name:</label>
+    <input type="text" id="subject3" name="subject3" required>
+    <label for="subject3Code">Subject 3 Code:</label>
+    <input type="text" id="subject3Code" name="subject3Code" required>
+    <label for="subject3Teacher">Subject 3 Teacher:</label>
+    <input type="text" id="subject3Teacher" name="subject3Teacher" required><br>
+
+    <label for="subject4">Subject 4 Name:</label>
+    <input type="text" id="subject4" name="subject4" required>
+    <label for="subject4Code">Subject 4 Code:</label>
+    <input type="text" id="subject4Code" name="subject4Code" required>
+    <label for="subject4Teacher">Subject 4 Teacher:</label>
+    <input type="text" id="subject4Teacher" name="subject4Teacher" required><br>
+
+    <label for="subject5">Subject 5 Name:</label>
+    <input type="text" id="subject5" name="subject5" required>
+    <label for="subject5Code">Subject 5 Code:</label>
+    <input type="text" id="subject5Code" name="subject5Code" required>
+    <label for="subject5Teacher">Subject 5 Teacher:</label>
+    <input type="text" id="subject5Teacher" name="subject5Teacher" required><br>
+
+    <h3>Semester 7</h3>
+    <label for="subject1">Subject 1 Name:</label>
+    <input type="text" id="subject1" name="subject1" required>
+    <label for="subject1Code">Subject 1 Code:</label>
+    <input type="text" id="subject1Code" name="subject1Code" required>
+    <label for="subject1Teacher">Subject 1 Teacher:</label>
+    <input type="text" id="subject1Teacher" name="subject1Teacher" required><br>
+
+    <label for="subject2">Subject 2 Name:</label>
+    <input type="text" id="subject2" name="subject2" required>
+    <label for="subject2Code">Subject 2 Code:</label>
+    <input type="text" id="subject2Code" name="subject2Code" required>
+    <label for="subject2Teacher">Subject 2 Teacher:</label>
+    <input type="text" id="subject2Teacher" name="subject2Teacher" required><br>
+
+    <label for="subject3">Subject 3 Name:</label>
+    <input type="text" id="subject3" name="subject3" required>
+    <label for="subject3Code">Subject 3 Code:</label>
+    <input type="text" id="subject3Code" name="subject3Code" required>
+    <label for="subject3Teacher">Subject 3 Teacher:</label>
+    <input type="text" id="subject3Teacher" name="subject3Teacher" required><br>
+
+    <label for="subject4">Subject 4 Name:</label>
+    <input type="text" id="subject4" name="subject4" required>
+    <label for="subject4Code">Subject 4 Code:</label>
+    <input type="text" id="subject4Code" name="subject4Code" required>
+    <label for="subject4Teacher">Subject 4 Teacher:</label>
+    <input type="text" id="subject4Teacher" name="subject4Teacher" required><br>
+
+    <label for="subject5">Subject 5 Name:</label>
+    <input type="text" id="subject5" name="subject5" required>
+    <label for="subject5Code">Subject 5 Code:</label>
+    <input type="text" id="subject5Code" name="subject5Code" required>
+    <label for="subject5Teacher">Subject 5 Teacher:</label>
+    <input type="text" id="subject5Teacher" name="subject5Teacher" required><br>
+    <!-- Repeat the above structure for Semester 2, 3, and 4 -->
+
+    <input type="submit" value="Submit">
+  </form>
+
+</body>
+
+</html>

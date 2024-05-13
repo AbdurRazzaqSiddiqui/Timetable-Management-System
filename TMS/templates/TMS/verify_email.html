@@ -1,23 +1,249 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verification</title>
+  <style>
+    /* Your existing CSS styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Raleway", sans-serif;
+    }
+
+    html,
+    body {
+      display: grid;
+      height: 100%;
+      width: 100%;
+      place-items: center;
+      background-image: url("{% static 'TMS/background.jpg' %}");
+      /* Replace 'background_image.jpg' with the path to your image */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    ::selection {
+      background: #12e8f0;
+      color: #fff;
+    }
+
+    .wrapper {
+      overflow: hidden;
+      max-width: 390px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 5px;
+      box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .wrapper .title-text {
+      display: flex;
+      width: 200%;
+    }
+
+    .wrapper .title {
+      width: 50%;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .wrapper .slide-controls {
+      position: relative;
+      display: flex;
+      height: 50px;
+      width: 100%;
+      overflow: hidden;
+      margin: 30px 0 10px 0;
+      justify-content: space-between;
+      border: 1px solid lightgrey;
+      border-radius: 5px;
+    }
+
+    .slide-controls .slide {
+      height: 100%;
+      width: 100%;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 500;
+      text-align: center;
+      line-height: 48px;
+      cursor: pointer;
+      z-index: 1;
+      transition: all 0.6s ease;
+    }
+
+    .slide-controls label.signup {
+      color: #000;
+    }
+
+    .slide-controls .slider-tab {
+      position: absolute;
+      height: 100%;
+      width: 50%;
+      left: 0;
+      z-index: 0;
+      border-radius: 5px;
+      background: -webkit-linear-gradient(left, #0bb1ed, #e6efec);
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    input[type="radio"] {
+      display: none;
+    }
+
+    #signup:checked~.slider-tab {
+      left: 50%;
+    }
+
+    #signup:checked~label.signup {
+      color: #fff;
+      cursor: default;
+      user-select: none;
+    }
+
+    #signup:checked~label.login {
+      color: #000;
+    }
+
+    #login:checked~label.signup {
+      color: #000;
+    }
+
+    #login:checked~label.login {
+      cursor: default;
+      user-select: none;
+    }
+
+    .wrapper .form-container {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .form-container .form-inner {
+      display: flex;
+      width: 200%;
+    }
+
+    .form-container .form-inner form {
+      width: 50%;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .form-inner form .field {
+      height: 100px;
+      /* Increased height to accommodate label */
+      width: 100%;
+      margin-top: 20px;
+      position: relative;
+    }
+
+    .form-inner form .field label {
+      position: absolute;
+      top: -20px;
+      /* Adjust this value to change the vertical position of the label */
+      left: 15px;
+      /* Adjust this value to align the label with the input field */
+      font-size: 14px;
+      /* Adjust the font size as needed */
+      color: #666;
+      /* Adjust the color as needed */
+    }
+
+    .form-inner form .field input {
+      height: calc(75% - 20px);
+      width: calc(100% - 30px);
+      /* Adjusted width to accommodate padding and border */
+      outline: none;
+      padding-left: 15px;
+      border-radius: 5px;
+      border: 1px solid lightgrey;
+      border-bottom-width: 2px;
+      font-size: 17px;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      /* Adjust this value to create space between the label and input field */
+    }
+
+    form .btn {
+      height: 50px;
+      width: 100%;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    form .btn .btn-layer {
+      height: 100%;
+      width: 300%;
+      position: absolute;
+      left: -100%;
+      background: -webkit-linear-gradient(right, #11b2e8, #0b0b0b);
+      border-radius: 5px;
+      transition: all 0.4s ease;
+    }
+
+    form .btn:hover .btn-layer {
+      left: 0;
+    }
+
+    form .btn input[type="submit"] {
+      height: 100%;
+      width: 100%;
+      z-index: 2;
+      position: relative;
+      background: none;
+      border: none;
+      color: #fff;
+      padding-left: 0;
+      border-radius: 10px;
+      font-size: 20px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
-    <form action="{% url 'TMS:verify_email' %}" method="post">
-        {% csrf_token %}
-        <div>
-            <input type="email" value="{{ user_email }}">
-        </div>
-        <div>
-            <input type="number" name="verification_code">
-        </div>
-        <input type="submit">
-    </form>
+  <div class="wrapper">
+    <div class="form-container">
+      <div class="form-inner">
+        <!-- onsubmit="submitVerification(event)" -->
+        <form action="{% url 'TMS:verify_email' %}" method="post" id="verificationForm" class="verification-form">
+          {% csrf_token %}
+          <div class="field">
+            <label for="verificationCode">Enter your verification code you received via email</label>
+            <input type="text" id="verificationCode" name="verification_code" placeholder="Enter 6-digit code"
+              maxlength="6" required />
+          </div>
+          <div class="btn">
+            <span class="btn-layer"></span>
+            <input type="submit" value="Verify" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function submitVerification(event) {
+      event.preventDefault();
+      const verificationCode =
+        document.getElementById("verificationCode").value;
+      if (verificationCode.length === 6 && /^\d+$/.test(verificationCode)) {
+        alert("Verification successful!"); // You can replace this with your verification logic
+      } else {
+        alert("Please enter a valid 6-digit code.");
+      }
+    }
+  </script>
 </body>
 
 </html>

@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Timetable</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-image: url("{% static 'TMS/background.jpg' %}");
+      /* Replace 'background_image.jpg' with the path to your image */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    h2 {
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      /* background-color: rgba(255, 255, 255, 0.8); Add a semi-transparent white background for better readability */
+    }
+
+    th,
+    td {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 8px;
+    }
+
+    /* th {
+        /* background-color: #f2f2f2; */
+    /* } */
+    */ select {
+      background-color: aqua;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <select style="background-color: rgb(5, 124, 244)" id="daySelector" onchange="changeDay()">
+    <option value="Monday">Monday</option>
+    <option value="Tuesday">Tuesday</option>
+    <option value="Wednesday">Wednesday</option>
+    <option value="Thursday">Thursday</option>
+    <option value="Friday">Friday</option>
+  </select>
+
+  <div id="timetableContainer">
+    {% for day, data in timetable.items %}
+    <div id="{{ day }}Timetable">
+      <h2>{{ day }} Timetable</h2>
+      <table>
+        <tr>
+          <th>Class/Time</th>
+          <th>8:00 AM - 9:00 AM</th>
+          <th>9:00 AM - 10:00 AM</th>
+          <th>10:00 AM - 11:00 AM</th>
+          <th>11:00 AM - 12:00 PM</th>
+          <th>12:00 PM - 1:00 PM</th>
+          <th>1:00 PM - 2:00 PM</th>
+          <th>2:00 PM - 3:00 PM</th>
+          <th>3:00 PM - 4:00 PM</th>
+        </tr>
+        {% for item in data %}
+        <tr>
+          {% if forloop.counter <= numVenues %} <td>e{{ forloop.counter }}</td>
+            {% endif %}
+            {% for sub_item in item %}
+            {% if sub_item %}
+            <td>
+              {{ sub_item.section }}, {{ sub_item.subject.subject_name }}, {{ sub_item.teacher }}
+            </td>
+            {% else %}
+            <td>
+              -
+            </td>
+            {% endif %}
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        <!-- Add more rows for different classes -->
+      </table>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+    window.onload = function () {
+      // Hide all timetables except for Monday
+      var allTimetables = document.querySelectorAll("#timetableContainer > div");
+      allTimetables.forEach(function (timetable) {
+        timetable.style.display = "none";
+      });
+      document.getElementById("MondayTimetable").style.display = "block";
+    };
+
+    function changeDay() {
+      var selectedDay = document.getElementById("daySelector").value;
+      var allTimetables = document.querySelectorAll("#timetableContainer > div");
+      allTimetables.forEach(function (timetable) {
+        timetable.style.display = "none";
+      });
+      document.getElementById(selectedDay + "Timetable").style.display = "block";
+    }
+  </script>
+</body>
+
+</html>

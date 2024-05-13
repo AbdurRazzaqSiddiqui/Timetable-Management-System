@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+
+<body>
+    <form action="{% url 'TMS:register' %}" method="post">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="username" placeholder="Enter Username">
+        </div>
+        <div>
+            <input type="email" name="email" placeholder="Enter Email">
+        </div>
+        <div>
+            <input type="password" name="password" placeholder="Enter Password">
+        </div>
+        <div>
+            <input type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <div>
+            <label for="User">Select User type:</label>
+            <select id="user" name="user" size="1">
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+            </select>
+        </div>
+        <input type="submit" name="submit">
+    </form>
+</body>
+
+</html>

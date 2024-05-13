@@ -1,0 +1,151 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Department Subject Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        padding: 20px;
+        background-image: url("{% static 'TMS/background.jpg' %}");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      #subjectForm {
+        align-self: center;
+        max-width: 1000px;
+        margin: 25px auto;
+        background-color: #fff;
+        padding: 15px 10px;
+
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        width: calc(40% - 6px);
+        /* Adjust width as needed */
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 15px;
+        height: 25px;
+        width: 200px;
+      }
+
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- <h2 id="department-heading">Department Subject Form</h2> -->
+    <!-- <div id="department-heading"></div> -->
+    <form
+      action="{% url 'TMS:semester_info_form' %}"
+      method="post"
+      id="subjectForm"
+    >
+      {% csrf_token %}
+    </form>
+
+    <script>
+      // Function to generate input fields dynamically
+      function generateInputFields(departments, batches, subjects) {
+        const form = document.getElementById("subjectForm");
+        var department_names = [
+          {% for item in departments %}
+      "{{ item }}"
+      {% endfor %}
+        ];
+
+
+      for (let dep = 0; dep < departments; dep++) {
+        const heading = document.createElement("h2");
+        heading.textContent = `${department_names[dep]}`;
+        form.appendChild(heading);
+
+        for (let i = 0; i < batches; i++) {
+          const semesterHeader = document.createElement("h3");
+          semesterHeader.textContent = `Batch ${i + 1}`;
+          form.appendChild(semesterHeader);
+
+          for (let j = 0; j < subjects; j++) {
+            const label = document.createElement("label");
+            label.htmlFor = `department${dep}-batch${i}-subject${j}`;
+            label.textContent = `Subject ${j + 1} Name:`;
+            form.appendChild(label);
+
+            const input = document.createElement("input");
+            input.type = "text";
+            input.id = `department${dep}-batch${i}-subject${j}`;
+            input.name = `department${dep}-batch${i}-subject${j}`;
+            input.required = true;
+            form.appendChild(input);
+
+            const codeLabel = document.createElement("label");
+            codeLabel.htmlFor = `department${dep}-batch${i}-subject${j}Code`;
+            codeLabel.textContent = `Subject ${j + 1} Code:`;
+            form.appendChild(codeLabel);
+
+            const codeInput = document.createElement("input");
+            codeInput.type = "text";
+            codeInput.id = `department${dep}-batch${i}-subject${j}Code`;
+            codeInput.name = `department${dep}-batch${i}-subject${j}Code`;
+            codeInput.required = true;
+            form.appendChild(codeInput);
+
+            const teacherLabel = document.createElement("label");
+            teacherLabel.htmlFor = `department${dep}-batch${i}-subject${j}Teacher`;
+            teacherLabel.textContent = `Subject ${j + 1} Teacher:`;
+            form.appendChild(teacherLabel);
+
+            const teacherInput = document.createElement("input");
+            teacherInput.type = "text";
+            teacherInput.id = `department${dep}-batch${i}-subject${j}Teacher`;
+            teacherInput.name = `department${dep}-batch${i}-subject${j}Teacher`;
+            teacherInput.required = true;
+            form.appendChild(teacherInput);
+
+            form.appendChild(document.createElement("br"));
+          }
+        }
+      }
+
+      const submitButton = document.createElement("input");
+      submitButton.type = "submit";
+      submitButton.value = "Submit";
+      form.appendChild(submitButton);
+      }
+
+      // Call the function to generate input fields for 4 batches
+      generateInputFields({{ numDepartments }}, {{ numBatches }}, {{ numSubjects }});
+    </script>
+  </body>
+</html>

@@ -51,16 +51,17 @@ class Subject(models.Model):
     # subjects_3 = ArrayField(
     #     models.CharField(max_length=20, blank=True)
     # )
-    subjects_1 = ArrayField(
-        models.CharField(max_length=20, blank=True)
-    )
+    subject_name = models.CharField(max_length=50)
+    subject_code = models.CharField(max_length=5)
+    subject_teacher = models.ForeignKey("Teacher", on_delete=models.CASCADE, related_name='teacher_subject')
+    credit_hrs = models.IntegerField()
     
     def __str__(self):
         return f"{self.batch}"
 
 class Teacher(models.Model):
     teacher_name = models.CharField(max_length=30)
-    subjects = models.ManyToManyField(Subject, related_name="teacher_subjects")
+    # subjects = models.ManyToManyField(Subject, related_name="teacher_subject")
 
     def __str__(self):
         return f"{self.teacher_name}"
@@ -82,7 +83,7 @@ class Timing(models.Model):
 
 class Timetable_components(models.Model):
     section = models.ForeignKey(Section, on_delete=models.CASCADE, related_name="component_section")
-    subject = models.CharField(max_length=20, blank=True)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE, related_name="component_subject")
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, related_name="component_teacher")
 
     def __str__(self):
