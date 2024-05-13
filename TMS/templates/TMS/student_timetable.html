@@ -52,13 +52,12 @@
     <option value="Thursday">Thursday</option>
     <option value="Friday">Friday</option>
   </select>
-  <form action="{% url 'TMS:teacher_timetable' %}" method="post">
+  <form action="{% url 'TMS:student_timetable' %}" method="post">
     {% csrf_token %}
-    <label for="tname">Enter you correct name:</label>
-    <input type="text" id="tname" name="tname" />
+    <label for="section">Enter your Section:</label>
+    <input type="text" id="section" name="section" />
     <input type="submit">
   </form>
-
   <div id="timetableContainer">
     {% for day, data in timetable.items %}
     <div id="{{ day }}Timetable">

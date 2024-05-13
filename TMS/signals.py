@@ -26,12 +26,12 @@ def Create_Sections(sender, instance, created, **kwargs):
             section_name = f"B{department.department_code}-{instance.semester_code}{chr(65+i)}"
             Section.objects.create(section_name=section_name,batch=instance)
             
-@receiver(post_save, sender=Section)
-def Create_Subjects(sender, instance, created, **kwargs):
-    if created:
-        subject_name = [f"{instance.section_name}-{i}" for i in range(5)]
-        try:
-            with transaction.atomic():
-                Subject.objects.create(batch_id=instance.batch.pk,subjects_1=subject_name,)
-        except IntegrityError:
-            pass
+# @receiver(post_save, sender=Section)
+# def Create_Subjects(sender, instance, created, **kwargs):
+#     if created:
+#         subject_name = [f"{instance.section_name}-{i}" for i in range(5)]
+#         try:
+#             with transaction.atomic():
+#                 Subject.objects.create(batch_id=instance.batch.pk,subjects_1=subject_name,)
+#         except IntegrityError:
+#             pass

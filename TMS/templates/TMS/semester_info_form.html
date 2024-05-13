@@ -82,6 +82,7 @@
         var department_names = [
           {% for item in departments %}
       "{{ item }}"
+      {% if not forloop.last %},{% endif %}
       {% endfor %}
         ];
 

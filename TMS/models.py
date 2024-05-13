@@ -7,6 +7,8 @@ class User(AbstractUser):
     verification_code = models.IntegerField(blank=True,null=True)
     verified = models.BooleanField(default=False,blank=True,null=True)
     approved = models.BooleanField(default=False,blank=True,null=True)
+    is_admin = models.BooleanField(default=False,blank=True,null=True)
+    is_teacher = models.BooleanField(default=False,blank=True,null=True)
 
 class University(models.Model):
     university_name = models.CharField(max_length=50)

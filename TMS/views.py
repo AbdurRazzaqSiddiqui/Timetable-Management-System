@@ -109,23 +109,18 @@ def University_Form(request):
             for j in range(1,secs+1):
                 sections.append(f"depName{i}numSections{j}")
             Department.objects.create(university=uni,department_name=request.POST[name1],department_code=request.POST[name2],sections=[int(request.POST[section]) for section in sections])
-        return render(request,"TMS/semester_info_form.html")
+        return render(request,"TMS/university_info_form.html")
     else:
         return render(request, "TMS/university_info_form.html")
 
 @login_required(login_url='TMS:login')
 @require_verification()
 def Semester_Form(request):
-    numSubjects = 1
+    numSubjects = 4
+    university = University.objects.all()[0]
+    departments = Department.objects.all()
+    batches = Batch.objects.all()
     if request.method == 'POST':
-        university = University.objects.all()[0]
-        departments = Department.objects.all()
-        # if university.semester_type == 'Fall':
-        #     batches = [(datetime.date.today().year)-i for i in range(4)]
-        # elif university.semester_type == 'Spring':
-        #     batches = [(datetime.date.today().year)-1-i for i in range(4)]
-        batches = Batch.objects.all()
-
         for i in range(len(departments)):
             for j in range(len(batches)):
                 for k in range(numSubjects):
@@ -142,12 +137,17 @@ def Semester_Form(request):
                     except Teacher.DoesNotExist:
                         teacher = Teacher.objects.create(teacher_name=request.POST[subject_teacher])
                     Subject.objects.create(batch=batches[j],subject_name=request.POST[subject_name],subject_code=request.POST[subject_code],subject_teacher=teacher)
-        return index(request)
+        return render(request, 'TMS/semester_info_form.html',{
+            "departments":[dep.department_name for dep in departments],
+            "numDepartments":len(departments),
+            "numBatches":len(Batch.objects.filter(department=departments[0])),
+            "numSubjects":numSubjects
+        })
     else:
         return render(request, 'TMS/semester_info_form.html',{
-            "departments":[dep.department_name for dep in Department.objects.all()],
-            "numDepartments":len(Department.objects.all()),
-            "numBatches":len(Batch.objects.all()),
+            "departments":[dep.department_name for dep in departments],
+            "numDepartments":len(departments),
+            "numBatches":len(Batch.objects.filter(department=departments[0])),
             "numSubjects":numSubjects
         })
 
@@ -178,24 +178,53 @@ def index(request):
     })
 
 def teacher_timetable(request):
-    dep = Department.objects.get(department_code="CS")
-    bat = Batch.objects.get(department=dep,year=2024)
-    sub = Subject.objects.get(batch=bat,subject_teacher=Teacher.objects.get(teacher_name="a"))
+    # dep = Department.objects.get(department_code="CS")
+    # bat = Batch.objects.get(department=dep,year=2024)
+    # sub = Subject.objects.get(batch=bat,subject_teacher=Teacher.objects.get(teacher_name="a"))
     # print(teacher)
-    timetable = Read_Timetable()
-    results = Create_Table()
-    
-    for day in timetable:
-        for i in range(len(timetable[day])):
-            for j in range(len(timetable[day][i])):
-                if timetable[day][i][j] != 0:
-                    if timetable[day][i][j].teacher == Teacher.objects.get(teacher_name="a"):
-                        results[day][i][j] = timetable[day][i][j]
-    
-    return render(request,"TMS/teacher_timetable.html",{
-        "timetable":results
-    })
+    if request.method == "POST":
+        timetable = Read_Timetable()
+        results = Create_Table()
+        teacher = Teacher.objects.get(teacher_name=request.POST['tname'])
+        print(teacher.teacher_name)
 
+        for day in timetable:
+            for i in range(len(timetable[day])):
+                for j in range(len(timetable[day][i])):
+                    if timetable[day][i][j] != 0:
+                        if timetable[day][i][j].teacher == teacher:
+                            results[day][i][j] = timetable[day][i][j]
+        
+        return render(request,"TMS/teacher_timetable.html",{
+            "timetable":results
+        })
+    else:
+        return render(request,"TMS/teacher_timetable.html",{
+            "timetable":[None,None],
+        })
+
+def student_timetable(request):
+    if request.method == "POST":
+        section = request.POST['section']
+        section = Section.objects.get(section_name=section)
+        timetable = Read_Timetable()
+        results = Create_Table()
+        
+        for day in timetable:
+            for i in range(len(timetable[day])):
+                for j in range(len(timetable[day][i])):
+                    if timetable[day][i][j] != 0:
+                        if timetable[day][i][j].section == section:
+                            results[day][i][j] = timetable[day][i][j]
+        
+        return render(request,"TMS/student_timetable.html",{
+            "timetable":results
+        })
+    else:
+        return render(request,"TMS/student_timetable.html",{
+            "timetable":[None,None],
+        })
+        
 def verify_email(request):
     user = request.user
     request.session['email'] = User.objects.get(username=user.username).email
